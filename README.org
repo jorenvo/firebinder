@@ -55,7 +55,7 @@ restarting the browser.
 [[http://fat.gfycat.com/SpicyFrankIberianmidwifetoad.gif]]
 ** How to use
 *** Installation
-Installation is done by downloading [[https://github.com/jorenvo/firebinder/blob/master/firebinder.xpi][the firebinder.xpi file]]. After
+Installation is done by downloading [[https://github.com/jorenvo/firebinder/raw/master/firebinder.xpi][the firebinder.xpi file]]. After
 that it can be installed by dragging the xpi file into a Firefox
 window or selecting it from the Add-on Manager after clicking Install
 add-on from file.
