@@ -3,6 +3,6 @@
 set -e
 
 cd ../extension
-rm -fv /tmp/firebinder.xpi
-zip -r /tmp/firebinder.xpi *
+rm -fv ../firebinder.xpi
+zip -r ../firebinder.xpi *
 cd ../scripts
