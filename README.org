@@ -47,9 +47,10 @@ ido-mode enabled. Currently supported features include:
 ***** HoK
 Another excellent extension for Firefox is KeySnail written by
 Masafumi Oyamada. KeySnail has a hinting extension called HoK. HoK has
-been ported to Firebinder and is available at TODO. Just like Ido mode
-it is a single JavaScript that can be simply installed by dropping it
-in the configuration directory and restarting the browser.
+been ported to Firebinder and is available [[https://github.com/jorenvo/firebinder-extensions/tree/master/hok][in the extension
+repository]]. Just like Ido mode it is a single JavaScript that can be
+simply installed by dropping it in the configuration directory and
+restarting the browser.
 [[http://giant.gfycat.com/BouncyFondIndianrhinoceros.gif]]
 [[http://fat.gfycat.com/SpicyFrankIberianmidwifetoad.gif]]
 ** How to use
@@ -66,19 +67,19 @@ Add-on Manager.
 It is important to note that by default Firebinder does not provide
 any keybindings. They need to be set by the user. This can be easily
 done by a JavaScript file in the configuration directory. I recommend
-taking a look at the bindings.js (TODO) file in the extensions
-repository. It provides some sensible bindings and you might want to
-use that file as a starting point. Keep in mind that just like in GNU
-Emacs, binding two different functions to the same key combination is
-not a good idea.
+taking a look at [[https://github.com/jorenvo/firebinder-extensions/tree/master/bindings][the bindings.js file in the extensions repository]]. It
+provides some sensible bindings and you might want to use that file as
+a starting point. Keep in mind that just like in GNU Emacs, binding
+two different functions to the same key combination is not a good
+idea.
 *** Extensions
 Ido mode and HoK are not a part of Firebinder. They are extensions
-that are available at the extensions repository (TODO). Installing
-these extensions is simple, just put the JavaScript files in the
+that are available at [[https://github.com/jorenvo/firebinder-extensions][the extensions repository]]. Installing these
+extensions is simple, just put the JavaScript files in the
 configuration directory and restart the browser. Extensions may
 provide their own default keybindings (eg. firebinder_hok.js), others
-may require that you bind the keys yourself (eg. ido.js). The
-documentation of the extension should clarify this.
+may require that you bind the keys yourself. The documentation of the
+extension should clarify this.
 ** Compatibily
 Currently the extension has only been tested on an up-to-date Arch
 Linux system with Firefox 34.0.5.
