@@ -1,0 +1,13 @@
+* Design
+** based on the js module pattern
+js module pattern in [[http://addyosmani.com/resources/essentialjsdesignpatterns/book/#modulepatternjavascript][Learning JavaScript Design Patterns by Addy Osmani]]
+** firebinder
+*** only global object
+** firebinder.AbstractKeyList
+*** abstract class
+*** implemented by
+**** firebinder.KeySequence
+**** firebinder.KeyChord
+* Conventions
+** singletons start with small letter
+** classes that can be instantiated multiple times start with capital letter

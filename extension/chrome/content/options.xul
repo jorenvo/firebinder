@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<prefwindow id="firebinder-prefs"
+     title="firebinder init directory"
+     xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <script type="application/x-javascript" src="chrome://firebinder/content/firebinder.js"/>
+  <script type="application/x-javascript" src="chrome://firebinder/content/options.js"/>
+
+<prefpane>
+  <preferences>
+    <preference id="prefJSDir" name="extensions.firebinder.jsInitDir" type="string"/>
+  </preferences>
+  <vbox align="center">
+    <label id="currentConfigLabel"/>
+    <button id="chooseJSDirButton" label="choose init dir" oncommand="firebinder.preferences.openDirPicker();" />
+  </vbox>
+</prefpane>
+
+</prefwindow>
