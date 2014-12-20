@@ -1,0 +1,84 @@
+* Firebinder
+Firebinder is an extensible Firefox extension that provides GNU
+Emacs-like features for Firefox.
+** Features
+*** Emacs-like keybindings
+Firebinder provides a simple way to define keybindings that start with
+a modified key (control/alt).
+*** Minibuffer
+A minibuffer system whose behavior very closely resembles that of GNU
+Emacs.
+- Pressing <tab> completes to longest common prefix
+[[http://fat.gfycat.com/ClutteredElaborateDipper.gif]]
+- Pressing <tab> brings up a list of possible completions when applicable
+[[http://fat.gfycat.com/GoodnaturedFaithfulCardinal.gif]]
+*** Built in key chord system
+David Andersson wrote an excellent extension for GNU Emacs called
+key-chord. Firebinder implements this idea for Firefox. This allows
+users to bind any JavaScript function to simultaneously pressed
+keys. The demonstration below shows the browser going back by pressing
+<comma>, <period> and <quote> simultaneously. Contrary to key-chord in
+GNU Emacs, the Firebinder key-chord implementation doesn't limit users
+to key chords which consist of only two keys. Key chords in Firebinder
+can consist of any number of keys. This helps solve a common problem
+with the original key-chord, which is that it is difficult to come up
+with key chords that don't conflict with normal typing.
+[[http://giant.gfycat.com/ReadyPepperyBluewhale.gif]]
+*** Extensible
+GNU Emacs provides users with an easy way to add new features or
+modify the behavior of the program. Users can just drop Emacs Lisp
+files in the correct place and when the editor starts it will
+automatically evaluate this code. Firebinder provides users with a
+similar principle. It allows users to set a directory in which all
+code will be evaluated when the extension starts. This allows for easy
+and powerful customization without the need for endless GUI options
+windows.
+***** Ido mode
+Ido mode (based on ido-mode written by Kim F. Storm for GNU Emacs)
+shows this extensibility. It is available as a single JavaScript file
+that users can drop in their configuration directories. It modifies the
+native Firebinder minibuffer to behave like it does in GNU Emacs with
+ido-mode enabled. Currently supported features include:
+- Substring matching (instead of the default prefix matching)
+- Default selections that can be immediately chosen with <return>
+- Selecting next and previous matches with C-s and C-r respectively
+- Restricting to current matches with C-SPC
+[[http://fat.gfycat.com/SkinnyHelpfulBeetle.gif]]
+***** HoK
+Another excellent extension for Firefox is KeySnail written by
+Masafumi Oyamada. KeySnail has a hinting extension called HoK. HoK has
+been ported to Firebinder and is available at TODO. Just like Ido mode
+it is a single JavaScript that can be simply installed by dropping it
+in the configuration directory and restarting the browser.
+[[http://giant.gfycat.com/BouncyFondIndianrhinoceros.gif]]
+[[http://fat.gfycat.com/SpicyFrankIberianmidwifetoad.gif]]
+** How to use
+*** Installation
+Installation is done by downloading the firebinder.xpi file
+(TODO). After that it can be installed by dragging the xpi file into a
+Firefox window or selecting it from the Add-on Manager after clicking
+Install add-on from file.
+*** First use
+It is necessary to set a configuration directory through the provided
+preferences menu of the extension. This menu is available in the
+Add-on Manager.
+*** Bindings
+It is important to note that by default Firebinder does not provide
+any keybindings. They need to be set by the user. This can be easily
+done by a JavaScript file in the configuration directory. I recommend
+taking a look at the bindings.js (TODO) file in the extensions
+repository. It provides some sensible bindings and you might want to
+use that file as a starting point. Keep in mind that just like in GNU
+Emacs, binding two different functions to the same key combination is
+not a good idea.
+*** Extensions
+Ido mode and HoK are not a part of Firebinder. They are extensions
+that are available at the extensions repository (TODO). Installing
+these extensions is simple, just put the JavaScript files in the
+configuration directory and restart the browser. Extensions may
+provide their own default keybindings (eg. firebinder_hok.js), others
+may require that you bind the keys yourself (eg. ido.js). The
+documentation of the extension should clarify this.
+** Compatibily
+Currently the extension has only been tested on an up-to-date Arch
+Linux system with Firefox 34.0.5.
