@@ -34,6 +34,7 @@ firebinder.commands = function () {
 	    }));
 
 	    gFindBar.onFindCommand();
+	    gFindBar.clear();
 	    gFindBar.toggleHighlight(true);
 	    gFindBar.getElement("highlight").setAttribute("checked", "true");
 	} else {
