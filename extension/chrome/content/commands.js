@@ -117,6 +117,10 @@ firebinder.commands = function () {
 	    goDoCommand("cmd_deleteWordForward");
 	},
 
+	killLine: function () {
+	    goDoCommand("cmd_deleteToEndOfLine");
+	},
+
 	wordPrevious: function () {
 	    goDoCommand("cmd_wordPrevious");
 	},
