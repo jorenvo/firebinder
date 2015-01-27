@@ -67,11 +67,19 @@ firebinder.commands = function () {
 	},
 
 	scrollTop: function () {
-	    goDoCommand("cmd_scrollTop");
+	    if (! firebinder.commands.markIsSet) {
+		goDoCommand("cmd_scrollTop");
+	    } else {
+		goDoCommand("cmd_selectTop");
+	    }
 	},
 
 	scrollBottom: function () {
-	    goDoCommand("cmd_scrollBottom");
+	    if (! firebinder.commands.markIsSet) {
+		goDoCommand("cmd_scrollBottom");
+	    } else {
+		goDoCommand("cmd_selectBottom");
+	    }
 	},
 
 	selectAll: function () {
@@ -79,31 +87,47 @@ firebinder.commands = function () {
 	},
 
 	scrollLineUp: function (e) {
-	    if (e.target.id === "urlbar") {
-		moveAutoComplete(true);
-	    }
+	    if (! firebinder.commands.markIsSet) {
+		if (e.target.id === "urlbar") {
+		    moveAutoComplete(true);
+		}
 
-	    goDoCommand("cmd_scrollLineUp");
-	    goDoCommand("cmd_linePrevious");
+		goDoCommand("cmd_scrollLineUp");
+		goDoCommand("cmd_linePrevious");
+	    } else {
+		goDoCommand("cmd_selectLinePrevious");
+	    }
 	},
 
 	scrollLineDown: function (e) {
-	    if (e.target.id === "urlbar") {
-		moveAutoComplete(false);
-	    }
+	    if (! firebinder.commands.markIsSet) {
+		if (e.target.id === "urlbar") {
+		    moveAutoComplete(false);
+		}
 
-	    goDoCommand("cmd_scrollLineDown");
-	    goDoCommand("cmd_lineNext");
+		goDoCommand("cmd_scrollLineDown");
+		goDoCommand("cmd_lineNext");
+	    } else {
+		goDoCommand("cmd_selectLineNext");
+	    }
 	},
 
 	scrollLeft: function () {
-	    goDoCommand("cmd_scrollLeft");
-	    goDoCommand("cmd_charPrevious");
+	    if (! firebinder.commands.markIsSet) {
+		goDoCommand("cmd_charPrevious");
+		goDoCommand("cmd_scrollLeft");
+	    } else {
+		goDoCommand("cmd_selectCharPrevious");
+	    }
 	},
 
 	scrollRight: function () {
-	    goDoCommand("cmd_scrollRight");
-	    goDoCommand("cmd_charNext");
+	    if (! firebinder.commands.markIsSet) {
+		goDoCommand("cmd_charNext");
+		goDoCommand("cmd_scrollRight");
+	    } else {
+		goDoCommand("cmd_selectCharNext");
+	    }
 	},
 
 	deleteWordBackward: function () {
@@ -122,20 +146,36 @@ firebinder.commands = function () {
 	    goDoCommand("cmd_deleteToEndOfLine");
 	},
 
-	wordPrevious: function () {
-	    goDoCommand("cmd_wordPrevious");
-	},
-
 	beginningOfLine: function () {
-	    goDoCommand("cmd_beginLine");
+	    if (! firebinder.commands.markIsSet) {
+		goDoCommand("cmd_beginLine");
+	    } else {
+		goDoCommand("cmd_selectBeginLine");
+	    }
 	},
 
 	endOfLine: function () {
-	    goDoCommand("cmd_endLine");
+	    if (! firebinder.commands.markIsSet) {
+		goDoCommand("cmd_endLine");
+	    } else {
+		goDoCommand("cmd_selectEndLine");
+	    }
 	},
 
 	wordNext: function () {
-	    goDoCommand("cmd_wordNext");
+	    if (! firebinder.commands.markIsSet) {
+		goDoCommand("cmd_wordNext");
+	    } else {
+		goDoCommand("cmd_selectWordNext");
+	    }
+	},
+
+	wordPrevious: function () {
+	    if (! firebinder.commands.markIsSet) {
+		goDoCommand("cmd_wordPrevious");
+	    } else {
+		goDoCommand("cmd_selectWordPrevious");
+	    }
 	},
 
 	copy: function () {
@@ -172,6 +212,12 @@ firebinder.commands = function () {
 
 	findBackward: function () {
 	    incSearch(true);
+	},
+
+	markIsSet: false,
+
+	setMark: function () {
+	    firebinder.commands.markIsSet = ! firebinder.commands.markIsSet;
 	},
 
 	// interactive commands
