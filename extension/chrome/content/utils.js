@@ -92,6 +92,24 @@ firebinder.utils = function () {
 	killTab: function (selectedTab) {
 	    console.info("killed tab " + selectedTab.displayValue);
 	    gBrowser.removeTab(selectedTab.reference);
+	},
+
+	putOnClipboard: function (string) {
+	    const gClipboardHelper = Components.classes["@mozilla.org/widget/clipboardhelper;1"]
+                      .getService(Components.interfaces.nsIClipboardHelper);
+	    gClipboardHelper.copyString(string);
+	},
+
+	getFromClipboard: function () {
+	    const Cc = Components.classes;
+	    let trans = Cc["@mozilla.org/widget/transferable;1"].createInstance(Ci.nsITransferable);
+	    trans.addDataFlavor("text/unicode");
+	    Services.clipboard.getData(trans, Services.clipboard.kGlobalClipboard);
+	    let str = {};
+	    let strLength = {};
+	    trans.getTransferData("text/unicode", str, strLength);
+
+	    return str.value.QueryInterface(Ci.nsISupportsString).data;
 	}
     };
 }();

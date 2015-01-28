@@ -52,9 +52,45 @@ firebinder.commands = function () {
 	}
     };
 
+    var insertClipboardInKillRing = function () {
+	firebinder.variables.killRing.insert(firebinder.utils.getFromClipboard());
+	firebinder.variables.killRingYankPointer = 0;
+    };
+
+    var clearSelection = function (e) {
+	var target = e.originalTarget;
+
+	/* Just using cmd_selectNone isn't very good because it
+	 * complains about InvalidStateErrors a lot. Also it
+	 * doesn't seem to set the cursor where you would expect
+	 * it.
+	 *
+	 * example:
+	 * some |words   [C-SPC] [M-f]
+	 * some words|   [C-g]
+	 * some |words
+	 *
+	 * In this example the cursor should have been be at the
+	 * end of the sentence, after 'word'. So the following
+	 * attempts to fix the cursor position manually before
+	 * running cmd_selectNone. */
+	if (typeof(target.selectionEnd) !== "undefined") {
+	    if (target.selectionEnd > firebinder.commands.mark) {
+		target.setSelectionRange(target.selectionEnd, target.selectionEnd);
+	    } else {
+		target.setSelectionRange(target.selectionStart, target.selectionStart);
+	    }
+	}
+
+	firebinder.commands.markIsSet = false;
+	firebinder.commands.mark = 0;
+
+	goDoCommand("cmd_selectNone");
+    };
+
     return {
-	keyboardQuit: function () {
-	    goDoCommand("cmd_selectNone");
+	keyboardQuit: function (e) {
+	    clearSelection(e);
 	    firebinder.minibuffer.reset();
 	},
 
@@ -131,19 +167,22 @@ firebinder.commands = function () {
 	},
 
 	deleteWordBackward: function () {
-	    goDoCommand("cmd_deleteWordBackward");
+	    goDoCommand("cmd_selectWordPrevious");
+	    firebinder.commands.cut();
+	},
+
+	deleteWordForward: function () {
+	    goDoCommand("cmd_selectWordNext");
+	    firebinder.commands.cut();
 	},
 
 	deleteCharForward: function () {
 	    goDoCommand("cmd_deleteCharForward");
 	},
 
-	deleteWordForward: function () {
-	    goDoCommand("cmd_deleteWordForward");
-	},
-
 	killLine: function () {
-	    goDoCommand("cmd_deleteToEndOfLine");
+	    goDoCommand("cmd_selectEndLine");
+	    firebinder.commands.cut();
 	},
 
 	beginningOfLine: function () {
@@ -178,16 +217,47 @@ firebinder.commands = function () {
 	    }
 	},
 
-	copy: function () {
+	copy: function (e) {
 	    goDoCommand("cmd_copy");
+	    clearSelection(e);
+	    insertClipboardInKillRing();
 	},
 
 	cut: function () {
 	    goDoCommand("cmd_cut");
+	    firebinder.commands.markIsSet = false;
+	    firebinder.commands.mark = 0;
+	    insertClipboardInKillRing();
 	},
 
-	paste: function () {
+	yank: function () {
 	    goDoCommand("cmd_paste");
+
+	    /* Deal with copies from outside Firefox. When something
+	     * is yanked that isn't in the killring it will be pasted
+	     * and then inserted in the killring. This killring
+	     * insertion is handled just as if the text is being
+	     * copied in Firefox, so the killRingYankPointer is reset
+	     * to 0. As far as I can tell this is what happens in GNU
+	     * Emacs. */
+	    if (firebinder.variables.killRing.ref(firebinder.variables.killRingYankPointer) !== firebinder.utils.getFromClipboard()) {
+		insertClipboardInKillRing();
+	    }
+	},
+
+	yankPop: function () {
+	    if (firebinder.variables.commandHistory.ref(0) === firebinder.commands.yank ||
+		firebinder.variables.commandHistory.ref(0) === firebinder.commands.yankPop) {
+		for (var i = 0, llen = firebinder.utils.getFromClipboard().length; i < llen; ++i) {
+		    goDoCommand("cmd_deleteCharBackward");
+		}
+
+		++firebinder.variables.killRingYankPointer;
+		firebinder.utils.putOnClipboard(firebinder.variables.killRing.ref(firebinder.variables.killRingYankPointer));
+		goDoCommand("cmd_paste");
+	    } else {
+		firebinder.display.inStatusPanel("Previous command was not a yank");
+	    }
 	},
 
 	goBack: function () {
@@ -214,10 +284,13 @@ firebinder.commands = function () {
 	    incSearch(true);
 	},
 
+	mark: 0,
 	markIsSet: false,
 
-	setMark: function () {
-	    firebinder.commands.markIsSet = ! firebinder.commands.markIsSet;
+	setMark: function (e) {
+	    clearSelection(e);
+	    firebinder.commands.markIsSet = true;
+	    firebinder.commands.mark = e.originalTarget.selectionStart;
 	},
 
 	// interactive commands

@@ -440,6 +440,7 @@ firebinder.keyPressHandler = function () {
 		clearKeyChordDelayTimeout();
 
 		currentSearchResult.match.command(e);
+		firebinder.variables.commandHistory.insert(currentSearchResult.match.command);
 		stopEvent(e);
 		reset();
 	    } else if (currentSearchResult.partialMatches.length > 0) {
