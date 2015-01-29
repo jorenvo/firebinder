@@ -75,15 +75,15 @@ firebinder.commands = function () {
 	 * attempts to fix the cursor position manually before
 	 * running cmd_selectNone. */
 	if (typeof(target.selectionEnd) !== "undefined") {
-	    if (target.selectionEnd > firebinder.commands.mark) {
+	    if (target.selectionEnd > firebinder.variables.mark) {
 		target.setSelectionRange(target.selectionEnd, target.selectionEnd);
 	    } else {
 		target.setSelectionRange(target.selectionStart, target.selectionStart);
 	    }
 	}
 
-	firebinder.commands.markIsSet = false;
-	firebinder.commands.mark = 0;
+	firebinder.variables.markIsSet = false;
+	firebinder.variables.mark = 0;
 
 	goDoCommand("cmd_selectNone");
     };
@@ -103,7 +103,7 @@ firebinder.commands = function () {
 	},
 
 	scrollTop: function () {
-	    if (! firebinder.commands.markIsSet) {
+	    if (! firebinder.variables.markIsSet) {
 		goDoCommand("cmd_scrollTop");
 	    } else {
 		goDoCommand("cmd_selectTop");
@@ -111,7 +111,7 @@ firebinder.commands = function () {
 	},
 
 	scrollBottom: function () {
-	    if (! firebinder.commands.markIsSet) {
+	    if (! firebinder.variables.markIsSet) {
 		goDoCommand("cmd_scrollBottom");
 	    } else {
 		goDoCommand("cmd_selectBottom");
@@ -123,7 +123,7 @@ firebinder.commands = function () {
 	},
 
 	scrollLineUp: function (e) {
-	    if (! firebinder.commands.markIsSet) {
+	    if (! firebinder.variables.markIsSet) {
 		if (e.target.id === "urlbar") {
 		    moveAutoComplete(true);
 		}
@@ -136,7 +136,7 @@ firebinder.commands = function () {
 	},
 
 	scrollLineDown: function (e) {
-	    if (! firebinder.commands.markIsSet) {
+	    if (! firebinder.variables.markIsSet) {
 		if (e.target.id === "urlbar") {
 		    moveAutoComplete(false);
 		}
@@ -149,7 +149,7 @@ firebinder.commands = function () {
 	},
 
 	scrollLeft: function () {
-	    if (! firebinder.commands.markIsSet) {
+	    if (! firebinder.variables.markIsSet) {
 		goDoCommand("cmd_charPrevious");
 		goDoCommand("cmd_scrollLeft");
 	    } else {
@@ -158,7 +158,7 @@ firebinder.commands = function () {
 	},
 
 	scrollRight: function () {
-	    if (! firebinder.commands.markIsSet) {
+	    if (! firebinder.variables.markIsSet) {
 		goDoCommand("cmd_charNext");
 		goDoCommand("cmd_scrollRight");
 	    } else {
@@ -186,7 +186,7 @@ firebinder.commands = function () {
 	},
 
 	beginningOfLine: function () {
-	    if (! firebinder.commands.markIsSet) {
+	    if (! firebinder.variables.markIsSet) {
 		goDoCommand("cmd_beginLine");
 	    } else {
 		goDoCommand("cmd_selectBeginLine");
@@ -194,7 +194,7 @@ firebinder.commands = function () {
 	},
 
 	endOfLine: function () {
-	    if (! firebinder.commands.markIsSet) {
+	    if (! firebinder.variables.markIsSet) {
 		goDoCommand("cmd_endLine");
 	    } else {
 		goDoCommand("cmd_selectEndLine");
@@ -202,7 +202,7 @@ firebinder.commands = function () {
 	},
 
 	wordNext: function () {
-	    if (! firebinder.commands.markIsSet) {
+	    if (! firebinder.variables.markIsSet) {
 		goDoCommand("cmd_wordNext");
 	    } else {
 		goDoCommand("cmd_selectWordNext");
@@ -210,7 +210,7 @@ firebinder.commands = function () {
 	},
 
 	wordPrevious: function () {
-	    if (! firebinder.commands.markIsSet) {
+	    if (! firebinder.variables.markIsSet) {
 		goDoCommand("cmd_wordPrevious");
 	    } else {
 		goDoCommand("cmd_selectWordPrevious");
@@ -225,8 +225,8 @@ firebinder.commands = function () {
 
 	cut: function () {
 	    goDoCommand("cmd_cut");
-	    firebinder.commands.markIsSet = false;
-	    firebinder.commands.mark = 0;
+	    firebinder.variables.markIsSet = false;
+	    firebinder.variables.mark = 0;
 	    insertClipboardInKillRing();
 	},
 
@@ -284,13 +284,10 @@ firebinder.commands = function () {
 	    incSearch(true);
 	},
 
-	mark: 0,
-	markIsSet: false,
-
 	setMark: function (e) {
 	    clearSelection(e);
-	    firebinder.commands.markIsSet = true;
-	    firebinder.commands.mark = e.originalTarget.selectionStart;
+	    firebinder.variables.markIsSet = true;
+	    firebinder.variables.mark = e.originalTarget.selectionStart;
 	},
 
 	// interactive commands

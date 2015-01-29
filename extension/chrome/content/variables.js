@@ -28,6 +28,9 @@ firebinder.variables = function () {
 	 * contains all executed commands, not just the complex ones.
 	 */
 	historyLength: historyLength,
-	commandHistory: firebinder.Ring(historyLength)
+	commandHistory: firebinder.Ring(historyLength),
+
+	mark: 0,
+	markIsSet: false
     };
 }();
