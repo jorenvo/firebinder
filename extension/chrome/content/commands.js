@@ -246,8 +246,10 @@ firebinder.commands = function () {
 	},
 
 	yankPop: function () {
-	    if (firebinder.variables.commandHistory.ref(0) === firebinder.commands.yank ||
-		firebinder.variables.commandHistory.ref(0) === firebinder.commands.yankPop) {
+	    let lastCommand = firebinder.variables.commandHistory.ref(0);
+
+	    if (lastCommand === firebinder.commands.yank ||
+		(lastCommand === firebinder.commands.yankPop && firebinder.variables.previousYankPopSuccess)) {
 		for (var i = 0, llen = firebinder.utils.getFromClipboard().length; i < llen; ++i) {
 		    goDoCommand("cmd_deleteCharBackward");
 		}
@@ -255,8 +257,10 @@ firebinder.commands = function () {
 		++firebinder.variables.killRingYankPointer;
 		firebinder.utils.putOnClipboard(firebinder.variables.killRing.ref(firebinder.variables.killRingYankPointer));
 		goDoCommand("cmd_paste");
+		firebinder.variables.previousYankPopSuccess = true;
 	    } else {
 		firebinder.display.inStatusPanel("Previous command was not a yank");
+		firebinder.variables.previousYankPopSuccess = false;
 	    }
 	},
 

@@ -22,6 +22,7 @@ firebinder.variables = function () {
 	killRingMax: killRingMax,
 	killRingYankPointer: 0,
 	killRing: firebinder.Ring(killRingMax),
+	previousYankPopSuccess: false,
 
 	/* commandHistory references to the command functions that have been
 	 * executed.  Contrary to GNU Emacs' command-history, this
