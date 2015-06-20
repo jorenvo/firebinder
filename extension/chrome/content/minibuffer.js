@@ -20,6 +20,7 @@ firebinder.minibuffer = function () {
 	allCompletions: [],
 	possibleCompletions: [],
 	match: null,
+	inputType: "",
 
 	prefixMatch: function (str, userInput) {
 	    return str.startsWith(userInput);
@@ -98,6 +99,7 @@ firebinder.minibuffer = function () {
 
 	show: function () {
 	    document.getElementById("minibuffer-box").hidden = false;
+	    document.getElementById("minibuffer-input").type = this.inputType;
 	    document.getElementById("minibuffer-input").focus();
 	},
 
@@ -111,6 +113,10 @@ firebinder.minibuffer = function () {
 
 	setInteractive: function (interactive) {
 	    this.currentInteractive = interactive;
+	},
+
+	setInputType: function (type) {
+	    this.inputType = type;
 	},
 
 	start: function () {
